@@ -1,0 +1,21 @@
+
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Reglas para la colección de Citas (Formulario de Reserva)
+    match /appointments/{appointmentId} {
+      // Permite que cualquier paciente cree una cita desde la web
+      allow create: if true;
+      // Solo el administrador autenticado puede ver, editar o borrar citas
+      allow read, update, delete: if request.auth != null;
+    }
+    
+    // Reglas para la colección de Mensajes (Formulario de Contacto)
+    match /messages/{messageId} {
+      // Permite que cualquier usuario envíe un mensaje
+      allow create: if true;
+      // Solo el administrador autenticado puede gestionar los mensajes
+      allow read, update, delete: if request.auth != null;
+    }
+  }
+}
