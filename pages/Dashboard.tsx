@@ -25,7 +25,7 @@ const Dashboard: React.FC = () => {
   const [statusError, setStatusError] = useState<string | null>(null);
 
   const [filterStatus, setFilterStatus] = useState<string>(AppointmentStatus.PENDING);
-  const [filterDate, setFilterDate] = useState<string>('');
+  const [filterDate, setFilterDate] = useState<string>(new Date().toISOString().split('T')[0]);
   const [searchTerm, setSearchTerm] = useState<string>('');
 
   const [loading, setLoading] = useState(true);
@@ -293,16 +293,28 @@ const Dashboard: React.FC = () => {
                     <span className="bg-slate-200 text-slate-600 px-3 py-1 rounded-full text-xs font-bold">{filteredApps.length}</span>
                   </div>
                   <div className="flex flex-wrap items-center gap-3 w-full lg:w-auto">
+                    <div className="relative" ref={datePickerRef}>
+                      <div className="flex items-center h-10 bg-white border border-slate-200 rounded-xl overflow-hidden shadow-sm">
+                        <button onClick={() => setShowDatePicker(!showDatePicker)} className="flex-grow h-full px-4 flex items-center gap-2 text-xs font-bold text-slate-600">
+                          <span className="material-symbols-outlined text-sm">calendar_month</span>
+                          <span>{filterDate ? labelDate(filterDate) : 'Filtrar Fecha'}</span>
+                        </button>
+                        {filterDate && (
+                          <button 
+                            onClick={() => setFilterDate('')} 
+                            title="Limpiar filtro de fecha"
+                            className="h-full px-2 text-slate-400 hover:text-rose-500 hover:bg-rose-50 transition-colors border-l border-slate-200"
+                          >
+                            <span className="material-symbols-outlined text-base">close</span>
+                          </button>
+                        )}
+                      </div>
+                      {showDatePicker && <div className="absolute top-12 left-0 z-[60] bg-white rounded-2xl shadow-2xl border border-slate-100 overflow-hidden">{renderMiniCalendar()}</div>}
+                    </div>
                     <div className="flex bg-white p-1.5 rounded-2xl border border-slate-200 shadow-sm">
                       {['all', AppointmentStatus.PENDING, AppointmentStatus.REALIZED, AppointmentStatus.NO_SHOW].map((st) => (
                         <button key={st} onClick={() => setFilterStatus(st)} className={`px-4 py-2 rounded-xl text-xs font-bold transition-all ${filterStatus === st ? 'bg-primary text-white' : 'text-slate-500 hover:bg-slate-50'}`}>{st === 'all' ? 'Todas' : st.toUpperCase()}</button>
                       ))}
-                    </div>
-                    <div className="relative" ref={datePickerRef}>
-                      <button onClick={() => setShowDatePicker(!showDatePicker)} className="h-10 px-4 bg-white border border-slate-200 rounded-xl flex items-center gap-2 text-xs font-bold text-slate-600">
-                        <span className="material-symbols-outlined text-sm">calendar_month</span> {filterDate || 'Filtrar Fecha'}
-                      </button>
-                      {showDatePicker && <div className="absolute top-12 left-0 z-[60] bg-white rounded-2xl shadow-2xl border border-slate-100 overflow-hidden">{renderMiniCalendar()}</div>}
                     </div>
                   </div>
                 </div>
