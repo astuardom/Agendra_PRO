@@ -1,7 +1,7 @@
 
 import React, { useState } from 'react';
 import { signInWithEmailAndPassword } from 'firebase/auth';
-import { auth } from '../firebase';
+import { auth } from '@/core/firebase';
 import { useNavigate, useLocation, Link } from 'react-router-dom';
 
 const Login: React.FC = () => {

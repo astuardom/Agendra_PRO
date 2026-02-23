@@ -1,43 +1,29 @@
-
 import React, { useEffect, useState } from 'react';
 import { HashRouter as Router, Routes, Route, Link, useLocation, useNavigate } from 'react-router-dom';
-import { onAuthStateChanged, signOut, type User } from 'firebase/auth';
-import { auth } from './firebase';
-import ProtectedRoute from './routes/ProtectedRoute';
-import GuestRoute from './routes/GuestRoute';
-import Home from './pages/Home';
-import About from './pages/About';
-import Booking from './pages/Booking';
-import Contact from './pages/Contact';
-import Dashboard from './pages/Dashboard';
-import Confirmation from './pages/Confirmation';
-import Login from './pages/Login';
+import { AuthProvider, useAuth } from '@/modules/auth';
+import { ProtectedRoute, GuestRoute } from '@/shared/components';
+import Home from '@/pages/Home';
+import About from '@/pages/About';
+import Contact from '@/pages/Contact';
+import Login from '@/pages/Login';
+import { Dashboard } from '@/modules/dashboard';
+import Booking from '@/modules/appointments/Booking';
+import Confirmation from '@/modules/appointments/Confirmation';
 
 const Navigation: React.FC = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  const [user, setUser] = useState<User | null>(null);
+  const { user, logout } = useAuth();
   const [menuOpen, setMenuOpen] = useState(false);
   const isDashboard = location.pathname.startsWith('/dashboard');
-
-  useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-      setUser(currentUser);
-    });
-    return () => unsubscribe();
-  }, []);
 
   useEffect(() => {
     setMenuOpen(false);
   }, [location.pathname]);
 
   const handleLogout = async () => {
-    try {
-      await signOut(auth);
-      navigate('/');
-    } catch (error) {
-      console.error('Error al cerrar sesión:', error);
-    }
+    await logout();
+    navigate('/');
   };
 
   if (isDashboard || location.pathname === '/login') return null;
@@ -92,7 +78,6 @@ const Navigation: React.FC = () => {
           </div>
         </div>
       </header>
-      {/* Menú móvil: oculto por defecto, se despliega al pulsar el ícono */}
       <div onClick={() => setMenuOpen(false)} className={`md:hidden fixed inset-0 bg-slate-900/40 z-40 backdrop-blur-sm transition-opacity duration-300 ${menuOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'}`} aria-hidden={!menuOpen} />
       <nav aria-hidden={!menuOpen} className={`md:hidden fixed top-0 left-0 h-full w-[280px] max-w-[85vw] bg-white shadow-2xl z-50 flex flex-col pt-[calc(56px+env(safe-area-inset-top))] transition-transform duration-300 ease-out overflow-hidden ${menuOpen ? 'translate-x-0' : '-translate-x-full'}`}>
         <div className="flex flex-col p-4 gap-1 overflow-y-auto">
@@ -143,26 +128,30 @@ const Footer: React.FC = () => {
   );
 };
 
-const App: React.FC = () => {
-  return (
-    <Router>
-      <div className="flex flex-col min-h-screen">
-        <Navigation />
-        <main className="flex-1">
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/about" element={<About />} />
-            <Route path="/booking" element={<Booking />} />
-            <Route path="/contact" element={<Contact />} />
-            <Route path="/login" element={<GuestRoute><Login /></GuestRoute>} />
-            <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
-            <Route path="/confirmation" element={<Confirmation />} />
-          </Routes>
-        </main>
-        <Footer />
-      </div>
-    </Router>
-  );
-};
+const AppRoutes: React.FC = () => (
+  <Router>
+    <div className="flex flex-col min-h-screen">
+      <Navigation />
+      <main className="flex-1">
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/booking" element={<Booking />} />
+          <Route path="/contact" element={<Contact />} />
+          <Route path="/login" element={<GuestRoute><Login /></GuestRoute>} />
+          <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
+          <Route path="/confirmation" element={<Confirmation />} />
+        </Routes>
+      </main>
+      <Footer />
+    </div>
+  </Router>
+);
+
+const App: React.FC = () => (
+  <AuthProvider>
+    <AppRoutes />
+  </AuthProvider>
+);
 
 export default App;
