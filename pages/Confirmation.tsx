@@ -52,9 +52,9 @@ hazlo con al menos 24h de antelación.
   };
 
   return (
-    <div className="min-h-screen bg-slate-50 flex items-center justify-center p-6">
+    <div className="min-h-screen bg-slate-50 flex items-center justify-center p-4 sm:p-6">
       <div className="max-w-md w-full animate-fade-in-up">
-        <div className="bg-white rounded-[3rem] shadow-2xl border border-slate-100 p-10 flex flex-col items-center text-center relative overflow-hidden">
+        <div className="bg-white rounded-2xl sm:rounded-[3rem] shadow-2xl border border-slate-100 p-6 sm:p-10 flex flex-col items-center text-center relative overflow-hidden">
           <div className="absolute top-0 left-0 w-full h-3 bg-primary"></div>
           <div className="size-24 bg-indigo-50 rounded-full flex items-center justify-center mb-8 ring-8 ring-indigo-50/50">
             <span className="material-symbols-outlined text-primary text-6xl font-bold filled-icon">sentiment_satisfied</span>

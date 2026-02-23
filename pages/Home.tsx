@@ -27,10 +27,10 @@ const Home: React.FC = () => {
   return (
     <div className="flex flex-col">
       {/* Hero */}
-      <section className="px-6 md:px-20 py-12 lg:py-24 bg-white flex justify-center">
+      <section className="px-4 sm:px-6 md:px-20 py-10 sm:py-12 lg:py-24 bg-white flex justify-center overflow-x-hidden">
         <div className="flex flex-col lg:flex-row items-center gap-12 max-w-[1200px]">
           <div className="flex flex-col gap-8 lg:w-1/2 text-center lg:text-left">
-            <h1 className="text-text-main text-4xl md:text-6xl font-extrabold leading-tight tracking-tight">
+            <h1 className="text-text-main text-3xl sm:text-4xl md:text-6xl font-extrabold leading-tight tracking-tight">
               Encuentra el <span className="text-primary">bienestar</span> emocional que buscas
             </h1>
             <p className="text-text-secondary text-lg leading-relaxed max-w-[600px] mx-auto lg:mx-0">

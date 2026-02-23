@@ -17,5 +17,11 @@ service cloud.firestore {
       // Solo el administrador autenticado puede gestionar los mensajes
       allow read, update, delete: if request.auth != null;
     }
+
+    // Reglas para la colección de Pacientes (registro interno)
+    match /patients/{patientId} {
+      // Solo el administrador autenticado puede crear, leer, editar y eliminar
+      allow create, read, update, delete: if request.auth != null;
+    }
   }
 }

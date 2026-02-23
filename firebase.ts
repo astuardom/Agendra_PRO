@@ -8,13 +8,13 @@ import { getFirestore } from 'firebase/firestore';
  * La clave process.env.API_KEY del entorno está configurada para Gemini y no es válida para Firebase Auth.
  */
 const firebaseConfig = {
-  apiKey: "AIzaSyArL0vzQTC3WKVtfv6sIesJLp4DCQ_Hxkw",
-  authDomain: "agendapro-1e3d8.firebaseapp.com",
-  projectId: "agendapro-1e3d8",
-  storageBucket: "agendapro-1e3d8.firebasestorage.app",
-  messagingSenderId: "744378486936",
-  appId: "1:744378486936:web:3da87c72464952b60d00ed",
-  measurementId: "G-CFHD0MRTP6"
+  apiKey: "AIzaSyC3WKadNIrC0aaFPabPDOzN8_Pc-hx5TSE",
+  authDomain: "agenda-veti.firebaseapp.com",
+  projectId: "agenda-veti",
+  storageBucket: "agenda-veti.firebasestorage.app",
+  messagingSenderId: "252513036838",
+  appId: "1:252513036838:web:83e6435de3fd9e5bef94e7",
+  measurementId: "G-6FWD6LFH6W"
 };
 
 // Inicialización con patrón singleton

@@ -4,9 +4,9 @@ import { Link } from 'react-router-dom';
 
 const About: React.FC = () => {
   return (
-    <div className="flex flex-col bg-white">
+    <div className="flex flex-col bg-white overflow-x-hidden">
       {/* Intro section */}
-      <section className="px-6 md:px-20 py-16 lg:py-24 max-w-[1280px] mx-auto w-full">
+      <section className="px-4 sm:px-6 md:px-20 py-12 sm:py-16 lg:py-24 max-w-[1280px] mx-auto w-full">
         <div className="flex flex-col lg:flex-row items-center gap-12">
           <div className="flex flex-col gap-8 flex-1 text-left">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-50 w-fit border border-indigo-100">

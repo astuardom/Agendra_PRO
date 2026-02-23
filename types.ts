@@ -17,3 +17,14 @@ export interface Appointment {
   notes?: string;
   createdAt?: any; // Firestore Timestamp
 }
+
+export interface Patient {
+  id?: string;
+  name: string;
+  email: string;
+  phone: string;
+  birthDate?: string; // YYYY-MM-DD
+  notes?: string;
+  createdAt?: any; // Firestore Timestamp
+  updatedAt?: any; // Firestore Timestamp
+}

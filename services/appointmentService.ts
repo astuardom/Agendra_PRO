@@ -61,6 +61,16 @@ export const updateAppointmentStatus = async (id: string, status: AppointmentSta
   }
 };
 
+export const updateAppointment = async (id: string, data: Partial<Omit<Appointment, 'id' | 'createdAt'>>) => {
+  try {
+    const docRef = doc(db, APPOINTMENTS_COLLECTION, id);
+    await updateDoc(docRef, data);
+  } catch (error) {
+    console.error("Error actualizando cita:", error);
+    throw error;
+  }
+};
+
 export const subscribeToAppointments = (callback: (appointments: Appointment[]) => void) => {
   const colRef = collection(db, APPOINTMENTS_COLLECTION);
   const q = query(colRef, orderBy("createdAt", "desc"));

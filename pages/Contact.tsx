@@ -86,7 +86,7 @@ const Contact: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background-light py-12 px-6 md:px-20 lg:px-40">
+    <div className="min-h-screen bg-background-light py-8 sm:py-12 px-4 sm:px-6 md:px-20 lg:px-40 overflow-x-hidden">
       <div className="max-w-[1200px] mx-auto flex flex-col gap-8">
         <div className="flex gap-2 text-slate-500 text-sm font-medium">
           <a href="/" className="hover:text-primary transition-colors">Inicio</a> / <span>Contacto</span>

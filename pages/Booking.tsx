@@ -136,17 +136,17 @@ const Booking: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background-alt py-12 px-6 md:px-20">
+    <div className="min-h-screen bg-background-alt py-8 sm:py-12 px-4 sm:px-6 md:px-20 overflow-x-hidden">
       <div className="max-w-6xl mx-auto">
-        <div className="text-center mb-12 flex flex-col items-center gap-3">
+        <div className="text-center mb-8 sm:mb-12 flex flex-col items-center gap-3">
           <span className="bg-indigo-50 text-primary px-4 py-1 rounded-full text-xs font-bold uppercase tracking-wide">Inicia tu proceso</span>
-          <h1 className="text-3xl md:text-5xl font-black text-slate-900">Agenda tu Sesión</h1>
+          <h1 className="text-2xl sm:text-3xl md:text-5xl font-black text-slate-900">Agenda tu Sesión</h1>
           <p className="text-text-secondary text-lg max-w-xl">Elige el momento que mejor se adapte a tu semana para nuestro encuentro.</p>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
-          <div className="lg:col-span-7 flex flex-col gap-8">
-            <div className="bg-white p-6 md:p-10 rounded-[2.5rem] shadow-xl border border-slate-100">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 sm:gap-12 items-start">
+          <div className="lg:col-span-7 flex flex-col gap-6 sm:gap-8">
+            <div className="bg-white p-4 sm:p-6 md:p-10 rounded-2xl sm:rounded-[2.5rem] shadow-xl border border-slate-100">
               <div className="flex justify-between items-center mb-8">
                 <h3 className="text-xl font-bold text-slate-800">{monthNames[currentMonth]} {currentYear}</h3>
                 <div className="flex gap-2">
@@ -168,7 +168,7 @@ const Booking: React.FC = () => {
                       key={idx}
                       disabled={disabled}
                       onClick={() => setSelectedDate(date.toISOString().split('T')[0])}
-                      className={`aspect-square flex items-center justify-center rounded-2xl text-sm font-bold transition-all relative mb-1 ${disabled ? 'text-slate-200 cursor-not-allowed' : selected ? 'bg-primary text-white shadow-xl scale-110 z-10' : 'text-slate-600 hover:bg-indigo-50 hover:text-primary'}`}
+                      className={`aspect-square flex items-center justify-center rounded-xl sm:rounded-2xl text-xs sm:text-sm font-bold transition-all relative mb-1 min-h-[36px] ${disabled ? 'text-slate-200 cursor-not-allowed' : selected ? 'bg-primary text-white shadow-xl scale-105 sm:scale-110 z-10' : 'text-slate-600 hover:bg-indigo-50 hover:text-primary active:bg-indigo-50'}`}
                     >
                       {date.getDate()}
                       {date.toDateString() === today.toDateString() && !selected && <span className="absolute bottom-2 size-1 bg-primary rounded-full" />}
@@ -199,7 +199,7 @@ const Booking: React.FC = () => {
           </div>
 
           <div className="lg:col-span-5">
-            <div className="bg-white p-8 md:p-10 rounded-[2.5rem] shadow-2xl border border-slate-100">
+            <div className="bg-white p-5 sm:p-8 md:p-10 rounded-2xl sm:rounded-[2.5rem] shadow-2xl border border-slate-100">
               <h3 className="text-xl font-bold text-slate-900 mb-6">Tus Datos</h3>
               <form onSubmit={handleSubmit} className="flex flex-col gap-6" noValidate>
                 <div className="space-y-5">

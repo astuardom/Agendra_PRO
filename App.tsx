@@ -15,6 +15,7 @@ const Navigation: React.FC = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const [user, setUser] = useState<User | null>(null);
+  const [menuOpen, setMenuOpen] = useState(false);
   const isDashboard = location.pathname.startsWith('/dashboard');
 
   useEffect(() => {
@@ -23,6 +24,10 @@ const Navigation: React.FC = () => {
     });
     return () => unsubscribe();
   }, []);
+
+  useEffect(() => {
+    setMenuOpen(false);
+  }, [location.pathname]);
 
   const handleLogout = async () => {
     try {
@@ -35,40 +40,64 @@ const Navigation: React.FC = () => {
 
   if (isDashboard || location.pathname === '/login') return null;
 
-  return (
-    <header className="sticky top-0 z-50 flex items-center justify-between whitespace-nowrap border-b border-solid border-b-[#f0f2f4] bg-white/80 backdrop-blur-md px-6 md:px-20 py-4">
-      <Link to="/" className="flex items-center gap-4 text-primary">
-        <span className="material-symbols-outlined text-3xl filled-icon">psychology</span>
-        <h2 className="text-text-main text-xl font-extrabold leading-tight tracking-[-0.015em]">Ps. Alejandro Martínez</h2>
+  const navLinks = (
+    <>
+      <Link to="/" className={`block py-3 px-4 rounded-xl text-base font-semibold transition-colors min-h-[44px] flex items-center ${location.pathname === '/' ? 'text-primary bg-primary/10' : 'text-text-main hover:bg-slate-100'}`}>Inicio</Link>
+      <Link to="/about" className={`block py-3 px-4 rounded-xl text-base font-semibold transition-colors min-h-[44px] flex items-center ${location.pathname === '/about' ? 'text-primary bg-primary/10' : 'text-text-main hover:bg-slate-100'}`}>Mi Enfoque</Link>
+      <Link to="/booking" className={`block py-3 px-4 rounded-xl text-base font-bold transition-colors min-h-[44px] flex items-center gap-2 ${location.pathname === '/booking' ? 'bg-primary text-white' : 'bg-primary/10 text-primary hover:bg-primary hover:text-white'}`}>
+        <span className="material-symbols-outlined text-lg">calendar_today</span>
+        Agendar Sesión
       </Link>
-      <div className="flex flex-1 justify-end gap-8">
-        <nav className="hidden md:flex items-center gap-6 lg:gap-8">
-          <Link to="/" className={`text-sm font-semibold transition-colors ${location.pathname === '/' ? 'text-primary' : 'text-text-main hover:text-primary'}`}>Inicio</Link>
-          <Link to="/about" className={`text-sm font-semibold transition-colors ${location.pathname === '/about' ? 'text-primary' : 'text-text-main hover:text-primary'}`}>Mi Enfoque</Link>
-          <Link to="/booking" className={`text-sm font-bold px-5 py-2.5 rounded-full transition-all flex items-center gap-2 ${location.pathname === '/booking' ? 'bg-primary text-white shadow-lg scale-105' : 'bg-primary/10 text-primary hover:bg-primary hover:text-white'}`}>
-            <span className="material-symbols-outlined text-sm">calendar_today</span>
-            Agendar Sesión
-          </Link>
-          <Link to="/contact" className={`text-sm font-semibold transition-colors ${location.pathname === '/contact' ? 'text-primary' : 'text-text-main hover:text-primary'}`}>Contacto</Link>
-        </nav>
-        <div className="flex items-center gap-3">
-          {user ? (
-            <>
-              <Link to="/dashboard" className="hidden sm:flex items-center justify-center rounded-lg h-10 px-4 bg-slate-100 hover:bg-slate-200 transition-colors text-slate-700 text-sm font-bold">
-                Panel Admin
-              </Link>
-              <button onClick={handleLogout} className="flex cursor-pointer items-center justify-center rounded-lg h-10 px-4 bg-slate-900 hover:bg-black transition-colors text-white text-sm font-bold shadow-sm">
-                Salir
-              </button>
-            </>
-          ) : (
-            <Link to="/login" className="flex min-w-[100px] cursor-pointer items-center justify-center rounded-lg h-10 px-6 bg-slate-900 hover:bg-black transition-colors text-white text-sm font-bold shadow-sm">
-              Ingresar
+      <Link to="/contact" className={`block py-3 px-4 rounded-xl text-base font-semibold transition-colors min-h-[44px] flex items-center ${location.pathname === '/contact' ? 'text-primary bg-primary/10' : 'text-text-main hover:bg-slate-100'}`}>Contacto</Link>
+    </>
+  );
+
+  return (
+    <>
+      <header className="sticky top-0 z-50 flex items-center justify-between whitespace-nowrap border-b border-solid border-b-[#f0f2f4] bg-white/95 backdrop-blur-md px-4 sm:px-6 md:px-20 py-3 sm:py-4 safe-area-inset-top">
+        <Link to="/" className="flex items-center gap-2 sm:gap-4 text-primary min-h-[44px] items-center">
+          <span className="material-symbols-outlined text-2xl sm:text-3xl filled-icon">psychology</span>
+          <h2 className="text-text-main text-base sm:text-xl font-extrabold leading-tight tracking-[-0.015em] truncate max-w-[180px] sm:max-w-none">Ps. Alejandro Martínez</h2>
+        </Link>
+        <div className="flex items-center gap-2 sm:gap-4">
+          <nav className="hidden md:flex items-center gap-4 lg:gap-6">
+            <Link to="/" className={`text-sm font-semibold transition-colors py-2 px-3 rounded-lg min-h-[44px] flex items-center ${location.pathname === '/' ? 'text-primary' : 'text-text-main hover:text-primary'}`}>Inicio</Link>
+            <Link to="/about" className={`text-sm font-semibold transition-colors py-2 px-3 rounded-lg min-h-[44px] flex items-center ${location.pathname === '/about' ? 'text-primary' : 'text-text-main hover:text-primary'}`}>Mi Enfoque</Link>
+            <Link to="/booking" className={`text-sm font-bold px-4 py-2.5 rounded-full transition-all flex items-center gap-2 min-h-[44px] ${location.pathname === '/booking' ? 'bg-primary text-white shadow-lg' : 'bg-primary/10 text-primary hover:bg-primary hover:text-white'}`}>
+              <span className="material-symbols-outlined text-sm">calendar_today</span>
+              Agendar Sesión
             </Link>
-          )}
+            <Link to="/contact" className={`text-sm font-semibold transition-colors py-2 px-3 rounded-lg min-h-[44px] flex items-center ${location.pathname === '/contact' ? 'text-primary' : 'text-text-main hover:text-primary'}`}>Contacto</Link>
+          </nav>
+          <div className="flex items-center gap-2">
+            {user ? (
+              <>
+                <Link to="/dashboard" className="hidden sm:flex items-center justify-center rounded-lg min-h-[44px] min-w-[44px] px-4 bg-slate-100 hover:bg-slate-200 transition-colors text-slate-700 text-sm font-bold">
+                  Panel Admin
+                </Link>
+                <button onClick={handleLogout} className="flex cursor-pointer items-center justify-center rounded-lg min-h-[44px] min-w-[44px] px-4 bg-slate-900 hover:bg-black transition-colors text-white text-sm font-bold shadow-sm">
+                  Salir
+                </button>
+              </>
+            ) : (
+              <Link to="/login" className="flex min-w-[44px] min-h-[44px] cursor-pointer items-center justify-center rounded-lg px-4 sm:px-6 bg-slate-900 hover:bg-black transition-colors text-white text-sm font-bold shadow-sm">
+                Ingresar
+              </Link>
+            )}
+            <button onClick={() => setMenuOpen(!menuOpen)} className="md:hidden flex items-center justify-center w-12 h-12 rounded-xl text-slate-600 hover:bg-slate-100 transition-colors" aria-label="Menú">
+              <span className="material-symbols-outlined text-2xl">{menuOpen ? 'close' : 'menu'}</span>
+            </button>
+          </div>
         </div>
-      </div>
-    </header>
+      </header>
+      {/* Menú móvil: oculto por defecto, se despliega al pulsar el ícono */}
+      <div onClick={() => setMenuOpen(false)} className={`md:hidden fixed inset-0 bg-slate-900/40 z-40 backdrop-blur-sm transition-opacity duration-300 ${menuOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'}`} aria-hidden={!menuOpen} />
+      <nav aria-hidden={!menuOpen} className={`md:hidden fixed top-0 left-0 h-full w-[280px] max-w-[85vw] bg-white shadow-2xl z-50 flex flex-col pt-[calc(56px+env(safe-area-inset-top))] transition-transform duration-300 ease-out overflow-hidden ${menuOpen ? 'translate-x-0' : '-translate-x-full'}`}>
+        <div className="flex flex-col p-4 gap-1 overflow-y-auto">
+          {navLinks}
+        </div>
+      </nav>
+    </>
   );
 };
 
@@ -79,7 +108,7 @@ const Footer: React.FC = () => {
   if (isDashboard) return null;
 
   return (
-    <footer className="border-t border-gray-100 bg-white pt-16 pb-8 px-6 md:px-20 flex justify-center">
+    <footer className="border-t border-gray-100 bg-white pt-12 sm:pt-16 pb-8 px-4 sm:px-6 md:px-20 flex justify-center pb-[calc(1rem+env(safe-area-inset-bottom))]">
       <div className="flex flex-col max-w-[1200px] flex-1 gap-12">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           <div className="flex flex-col gap-4">
